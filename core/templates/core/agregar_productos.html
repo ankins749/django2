@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar productos a la tienda</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <header id="navegacion"></header> 
+    <hr>
+    <h1 class="text-center">Agregar productos a la tienda</h1>
+    <br>
+    <main class="container">
+        <div class="row">
+            <!--Formulario -->
+            <div class="col-md-6">
+                <form class="row g-3 text-center">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">
+                            <i class="bi bi-123"></i>
+                        </span>
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="campo_id" placeholder="">
+                            <label for="campo_id">ID</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">
+                            <i class="bi bi-journals"></i>
+                        </span>
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="campo_categoria" placeholder="">
+                            <label for="campo_categoria">Categoría</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">
+                            <i class="bi bi-alphabet"></i>
+                        </span>
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="campo_nombre_producto" placeholder="">
+                            <label for="campo_nombre_producto">Nombre del producto</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">
+                            <i class="bi bi-alphabet"></i>
+                        </span>
+                        <div class="form-floating">
+                            <textarea class="form-control" id="campo_descripcion_producto" style="height: 100px; resize: none;" placeholder="" required></textarea>
+                            <label for="campo_descripcion_producto">Descripción del producto</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">
+                            <i class="bi bi-currency-dollar"></i>
+                        </span>
+                        <div class="form-floating">
+                            <input type="number" id="campo_precio" class="form-control" step="0.01" required>
+                            <label for="campo_precio" class="form-label">Precio del producto</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">
+                            %
+                        </span>
+                        <div class="form-floating">
+                            <input type="text" id="campo_descuento_sub" class="form-control">
+                            <label for="campo_descuento_sub" class="form-label">Descuento por suscriptor</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">
+                            %
+                        </span>
+                        <div class="form-floating">
+                            <input type="text" id="campo_descuento_oferta" class="form-control">
+                            <label for="campo_descuento_oferta" class="form-label">Descuento por oferta</label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button type="button" class="btn btn-primary mx-2" onclick="guardarProducto()"><i class="bi bi-floppy"></i> Guardar</button>
+                        <button type="button" class="btn btn-secondary mx-2"><i class="bi bi-plus-circle"></i> Nuevo</button>
+                        <button type="button" class="btn btn-danger mx-2"><i class="bi bi-trash"></i> Eliminar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <div class="col-12 mt-3">
+                    <label for="foto" class="form-label">Cargar imagen del producto</label>
+                    <div class="input-group">
+                        <input type="file" class="form-control" id="foto" name="photo" accept="image/*">
+                    </div>
+                    <div class="mt-3">
+                        <img id="imagenSeleccionada" src="#" alt="" style="max-width: 70%; height: 80%;">
+                    </div>
+                </div>
+            </div>
+            <!-- Tabla de productos -->
+            <div class="col-md-12 mt-4">
+                <h2>Productos disponibles</h2>
+                <table class="table" id="tablaProductos">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Categoría</th>
+                            <th scope="col">Título</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Descuento para subscriptores</th>
+                            <th scope="col">Descuento en oferta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr onclick="cargarProducto(this)">
+                            <th scope="row">1</th>
+                            <td>Aventura</td>
+                            <td>The Legend of Zelda: Breath of the Wild</td>
+                            <td>Únete a Link en su aventura para salvar Hyrule de la oscuridad.</td>
+                            <td>$35,000</td>
+                            <td>5%</td>
+                            <td>2%</td>
+                        </tr>
+                        <tr onclick="cargarProducto(this)">
+                            <th scope="row">2</th>
+                            <td>Acción</td>
+                            <td>Red Dead Redemption 2</td>
+                            <td>Explora el salvaje oeste en esta épica historia de forajidos y honor.</td>
+                            <td>$29,990</td>
+                            <td>3%</td>
+                            <td>1%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main> 
+    <footer>
+        <div id="page-footer">
+            <p>PrograGames &copy; 2024. Todos los derechos reservados.</p>
+            <b><p>Hecho con <span id="corazon">♥</span> por Nico.</p></b>
+        </div>
+    </footer>
+    <script src="js/registro.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
