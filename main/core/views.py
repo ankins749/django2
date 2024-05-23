@@ -23,8 +23,8 @@ def mantenedor_bodega(request):
     return render(request, 'core/mantenedor_bodega.html')
 def mis_datos(request):
     return render(request, 'core/mis_datos.html')
-def navbars(request):
-    return render(request, 'core/navbars.html')
+def navegacion(request):
+    return render(request, 'core/navegacion.html')
 def nosotros(request):
     return render(request, 'core/nosotros.html')
 def registro(request):
