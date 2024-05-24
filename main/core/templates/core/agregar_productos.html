@@ -1,15 +1,16 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar productos a la tienda</title>
-    <link rel="stylesheet" href="/core/static/core/css/style.css">
-    <link rel="stylesheet" href="/core/static/core/css/login.css">
+    <link rel="stylesheet" href="{% static "core/css/style.css" %}">
+    <link rel="stylesheet" href="{% static "core/css/login.css" %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
-    <header id="navegacion"></header> 
+    <header id="navegacion">{% include "./navegacion.html" %}</header> 
     <hr>
     <h1 class="text-center">Agregar productos a la tienda</h1>
     <br>
@@ -33,7 +34,16 @@
                             <i class="bi bi-journals"></i>
                         </span>
                         <div class="form-floating">
-                            <input type="text" class="form-control" id="campo_categoria" placeholder="">
+                            <select class="form-select" id="campo_categoria" aria-label="Categoría">
+                                <option value="" disabled selected>Selecciona una categoría</option>
+                                <option value="accion">Acción</option>
+                                <option value="aventura">Aventura</option>
+                                <option value="deporte">Deporte</option>
+                                <option value="estrategia">Estrategia</option>
+                                <option value="rol">Rol</option>
+                                <option value="simulacion">Simulación</option>
+                                <option value="terror">Terror</option>
+                            </select>
                             <label for="campo_categoria">Categoría</label>
                         </div>
                     </div>
@@ -150,9 +160,8 @@
             <b><p>Hecho con <span id="corazon">♥</span> por Nico.</p></b>
         </div>
     </footer>
-    <script src="/core/static/core/js/registro.js"></script>
-    <script src="/core/static/core/js/main.js"></script>
-    <script src="/core/static/core/js/admin.js"></script>
+    <script src="/static/core/js/registro.js"></script>
+    <script src="/static/core/js/admin.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

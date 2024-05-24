@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		let descuentoOferta = juego.en_descuento ? juego.porc_descuento : 0
 		let descuentoTotal = descuentoOferta + descuentoSub
 
-		imagen.src = "img/juegos/" + juego.img + ".jpg"
+		imagen.src = "/static/core/img/juegos/" + juego.img + ".jpg"
 		imagen.width = 35
 		imagen.height = 35
 
@@ -131,7 +131,7 @@ function summonPedro() {
 		var modalBody = document.getElementById("modalProcesandoCompraBody")
 		modalHeader.innerText = "Estamos procesando tu compra..."
 		modalBody.innerHTML = `
-		<img src="img/pedrinho.gif" style="width: 150px; height: 150px; border-radius: 100px;">
+		<img src="/static/core/img/pedrinho.gif" style="width: 150px; height: 150px; border-radius: 100px;">
 		`
 		modalInstance.show()
 		activarLuces()

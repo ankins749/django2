@@ -97,7 +97,7 @@ export function sendToast(titulo, cuerpo, tipo = "success") {
 //Obtener los datos de los juegos.
 export async function getJuegosData() {
 	try {
-		const respuesta = await fetch("./data/juegos.json")
+		const respuesta = await fetch("/static/core/data/juegos.json")
 		if (!respuesta.ok) {
 			throw new Error(`HTTP Error Status: ${respuesta.status}`)
 		}

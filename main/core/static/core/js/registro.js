@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var contrasena = document.getElementById("campo_contraseña").value;
 
         // Cargar el archivo JSON de usuarios
-        fetch('data/cuentas.json')
+        fetch('/static/core/data/cuentas.json')
         .then(response => response.json())
         .then(data => {
             // Buscar el usuario en el archivo JSON
@@ -17,9 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 // alert("¡Inicio de sesión exitoso!");
 
                 if (usuarioEncontrado.rol === 1) { // Administrador
-                    window.location.href = "admin.html";
+                    window.location.href = adminURL;
                 } else if (usuarioEncontrado.rol === 0) { // Usuario normal
-                    window.location.href = "index.html";
+                    window.location.href = indexURL;
                     window.location.reload();
                 }
                 

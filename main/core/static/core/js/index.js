@@ -34,7 +34,7 @@ buscador.addEventListener("input", function() {
 			<div class="card mb-3 h-100" style="max-width: 100%;">
 				<div class="row g-0">
 					<div class="col-md-4">
-						<img src="${'img/juegos/' + juego.img + '.jpg'}" class="img-fluid rounded-start">
+						<img src="${'/static/core/img/juegos/' + juego.img + '.jpg'}" class="img-fluid rounded-start">
 					</div>
 					<div class="col-md-8 d-flex flex-column">
 						<div class="card-body">
@@ -115,7 +115,7 @@ window.mostrarJuegos = function(pagina) {
 		var tarjetaJuego = `
 			<div class="col m-4 col-sm-12 col-md-6 col-lg-4 col-xl-3">
 				<div class="card" id="carta-juego">
-					<img src="${'img/juegos/' + juego.img + '.jpg'}">
+					<img src="${'/static/core/img/juegos/' + juego.img + '.jpg'}">
 					<div class="card-body">
 						<h5 class="card-title text-center">${juego.nombre}</h5>
 						<h5>
@@ -256,7 +256,7 @@ function mostrarFichaProducto(juegosEnPagina, i) {
 		<div class="card mb-3 h-100" style="max-width: 100%;">
 			<div class="row g-0">
 				<div class="col-md-4">
-					<img src="${'img/juegos/' + juego.img + '.jpg'}" class="img-fluid rounded-start">
+					<img src="${'/static/core/img/juegos/' + juego.img + '.jpg'}" class="img-fluid rounded-start">
 				</div>
 				<div class="col-md-8 d-flex flex-column">
 					<div class="card-body">

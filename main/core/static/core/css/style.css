@@ -9,14 +9,14 @@ footer {
 }
 
 #corazon { color: red; font-size: larger; }
-#carta-juego { height: 100%; }
+#carta-juego, #carta-producto { height: 100%; }
 #juego-precio-actual { color: rgb(93, 255, 77) }
 #juego-stock-actual { color: rgb(255, 186, 108) }
 #juego-oferta { color: yellow; }
 #juego-descuento { color: rgb(138, 170, 255) }
 #juego-precio-anterior { color: gray; text-decoration: line-through; }
-#carta-juego { transition: transform 0.1s ease-in-out; transition: box-shadow 0.3 ease; }
-#carta-juego:hover { transform: scale(1.02); box-shadow: 0 4px 20px rgba(184, 184, 184, 1) }
+#carta-juego, #carta-producto { transition: transform 0.1s ease-in-out; transition: box-shadow 0.3 ease; }
+#carta-juego:hover, #carta-producto:hover { transform: scale(1.02); box-shadow: 0 4px 20px rgba(184, 184, 184, 1) }
 #cajaModal { box-shadow: 0 4px 20px rgba(184, 184, 184, 0.7) }
 .btn-flotante {
 	position: fixed;

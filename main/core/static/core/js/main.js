@@ -1,6 +1,6 @@
 /* COPIAR EL NAVBAR A TODAS LAS DEMÁS PÁGINAS */
-window.addEventListener("DOMContentLoaded", () => {
-	fetch("navegacion.html")
+/* window.addEventListener("DOMContentLoaded", () => {
+	fetch("../../../templates/core/navegacion.html")
 		.then(response => response.text())
 		.then(data => {
 			document.getElementById("navegacion").innerHTML = data
@@ -10,4 +10,4 @@ window.addEventListener("DOMContentLoaded", () => {
 		})
 })
 
-
+ */
