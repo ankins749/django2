@@ -1,0 +1,133 @@
+{
+    "0": {
+        "nombre": "Need For Speed™ Heat",
+        "descripcion": "Hustle by day and risk it all at night in Need for Speed™ Heat Deluxe Edition, a white-knuckle street racer, where the lines of the law fade as the sun starts to set.",
+        "precio": 55900,
+        "stock": 17,
+        "en_descuento": true,
+        "porc_descuento": 95,
+        "en_restock": false,
+        "categoria": "",
+        "img": "nfs_heat"
+    },
+    "1": {
+        "nombre": "Stardew Valley",
+        "descripcion": "You've inherited your grandfather's old farm plot in Stardew Valley. Armed with hand-me-down tools and a few coins, you set out to begin your new life. Can you learn to live off the land and turn these overgrown fields into a thriving home?",
+        "precio": 7500,
+        "stock": 0,
+        "en_descuento": false,
+        "porc_descuento": 0,
+        "en_restock": false,
+        "img": "stardew_valley"
+    },
+    "2": {
+        "nombre": "Tom Clancy's Rainbow Six Siege",
+        "descripcion": "Tom Clancy's Rainbow Six® Siege is an elite, tactical team-based shooter where superior planning and execution triumph.",
+        "precio": 16299,
+        "stock": 0,
+        "en_descuento": false,
+        "porc_descuento": 0,
+        "en_restock": true,
+        "img": "rainbow_six_siege"
+    },
+    "3": {
+        "nombre": "PAYDAY 2",
+        "descripcion": "PAYDAY 2 is an action-packed, four-player co-op shooter that once again lets gamers don the masks of the original PAYDAY crew - Dallas, Hoxton, Wolf and Chains - as they descend on Washington DC for an epic crime spree.",
+        "precio": 5750,
+        "stock": 26,
+        "en_descuento": false,
+        "porc_descuento": 0,
+        "en_restock": false,
+        "img": "payday2"
+    },
+    "4": {
+        "nombre": "Lethal Company",
+        "descripcion": "A co-op horror about scavenging at abandoned moons to sell scrap to the Company.",
+        "precio": 5750,
+        "stock": 37,
+        "en_descuento": false,
+        "porc_descuento": 0,
+        "en_restock": false,
+        "img": "lethal_company"
+    },
+    "5": {
+        "nombre": "Terraria",
+        "descripcion": "Dig, fight, explore, build! Nothing is impossible in this action-packed adventure game. Four Pack also available!",
+        "precio": 2875,
+        "stock": 13,
+        "en_descuento": true,
+        "porc_descuento": 66,
+        "en_restock": false,
+        "img": "terraria"
+    },
+    "6": {
+        "nombre": "Rust",
+        "descripcion": "The only aim in Rust is to survive. Everything wants you to die - the island’s wildlife and other inhabitants, the environment, other survivors. Do whatever it takes to last another night.",
+        "precio": 17900,
+        "stock": 40,
+        "en_descuento": false,
+        "porc_descuento": 0,
+        "en_restock": false,
+        "img": "rust"
+    },
+    "7": {
+        "nombre": "Red Dead Redemption 2",
+        "descripcion": "Winner of over 175 Game of the Year Awards and recipient of over 250 perfect scores, RDR2 is the epic tale of outlaw Arthur Morgan and the infamous Van der Linde gang, on the run across America at the dawn of the modern age. Also includes access to the shared living world of Red Dead Online.",
+        "precio": 39990,
+        "stock": 49,
+        "en_descuento": true,
+        "porc_descuento": 67,
+        "en_restock": false,
+        "img": "rdr2"
+    },
+    "8": {
+        "nombre": "Garry's Mod",
+        "descripcion": "Garry's Mod is a physics sandbox. There aren't any predefined aims or goals. We give you the tools and leave you to play.",
+        "precio": 5500,
+        "stock": 0,
+        "en_descuento": false,
+        "porc_descuento": 0,
+        "en_restock": false,
+        "img": "gmod"
+    },
+    "9": {
+        "nombre": "ARK: Survival Evolved",
+        "descripcion": "Stranded on the shores of a mysterious island, you must learn to survive. Use your cunning to kill or tame the primeval creatures roaming the land, and encounter other players to survive, dominate... and escape!",
+        "precio": 8300,
+        "stock": 7,
+        "en_descuento": false,
+        "porc_descuento": 0,
+        "en_restock": true,
+        "img": "ark_survival_evolved"
+    },
+    "10": {
+        "nombre": "Left 4 Dead 2",
+        "descripcion": "Set in the zombie apocalypse, Left 4 Dead 2 (L4D2) is the highly anticipated sequel to the award-winning Left 4 Dead, the #1 co-op game of 2008. This co-operative action horror FPS takes you and your friends through the cities, swamps and cemeteries of the Deep South, from Savannah to New Orleans across five expansive campaigns.",
+        "precio": 5750,
+        "stock": 134,
+        "en_descuento": true,
+        "porc_descuento": 90,
+        "en_restock": false,
+        "img": "l4d2"
+    },
+    "11": {
+        "nombre": "Sid Meier's Civilization V",
+        "descripcion": "Create, discover, and download new player-created maps, scenarios, interfaces, and more!",
+        "precio": 14500,
+        "stock": 32,
+        "en_descuento": false,
+        "porc_descuento": 0,
+        "en_restock": false,
+        "img": "civ5"
+    },
+    "12": {
+        "nombre": "The Binding of Isaac: Rebirth",
+        "descripcion": "The Binding of Isaac: Rebirth is a randomly generated action RPG shooter with heavy Rogue-like elements. Following Isaac on his journey players will find bizarre treasures that change Isaac’s form giving him super human abilities and enabling him to fight off droves of mysterious creatures, discover secrets and fight his way to safety.",
+        "precio": 6400,
+        "stock": 62,
+        "en_descuento": false,
+        "porc_descuento": 0,
+        "en_restock": false,
+        "img": "tboi_rebirth"
+    }
+}
