@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		let descuentoOferta = juego.en_descuento ? juego.descuento : 0
 		let descuentoTotal = descuentoOferta + descuentoSub
 
-		imagen.src = "media/" + juego.imagen
+		imagen.src = "/media/" + juego.imagen
 		// imagen.src=imagen.src.replace("/carrito_compras/","")
 		console.log("veeme aqui abajo")
 		console.log(imagen.src)
