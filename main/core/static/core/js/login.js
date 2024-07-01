@@ -14,7 +14,7 @@ console.log(test) */
 
 function registrarUsuario() {
 	let usuario = document.getElementById("campo_usuario").value.trim()
-	let correo = document.getElementById("campo_mail").value.trim()
+	let correo = document.getElementById("campo_correo").value.trim()
 	let contraseña = document.getElementById("campo_contraseña").value.trim()
 	let contraseñaRep = document.getElementById("campo_repetir_contraseña").value.trim()
 
