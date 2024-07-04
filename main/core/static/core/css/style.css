@@ -7,6 +7,10 @@ footer {
 	width: 100%;
 	padding-bottom: 1px;
 }
+#icon-instagram {
+	background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+	-webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
 
 #corazon { color: red; font-size: larger; }
 #carta-juego, #carta-producto { height: 100%; }
@@ -16,7 +20,7 @@ footer {
 #juego-descuento { color: rgb(138, 170, 255) }
 #juego-precio-anterior { color: gray; text-decoration: line-through; }
 #carta-juego, #carta-producto { transition: transform 0.1s ease-in-out; transition: box-shadow 0.3 ease; }
-#carta-juego:hover, #carta-producto:hover { transform: scale(1.02); box-shadow: 0 4px 20px rgba(184, 184, 184, 1) }
+#carta-juego:hover, #carta-producto:hover { transform: scale(1.02); box-shadow: 0 4px 20px rgba(118, 215, 196, 0.5) }
 #cajaModal { box-shadow: 0 4px 20px rgba(184, 184, 184, 0.7) }
 .btn-flotante {
 	position: fixed;
@@ -88,10 +92,6 @@ footer {
 }
 
 @keyframes parpadeo {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
+	0% { opacity: 0; }
+	100% { opacity: 1; }
 }

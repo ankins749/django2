@@ -1,212 +1,147 @@
 //=================================================================================
-import { getJuegosData, sendToast, agregarAlCarrito, actualizarBotonCarrito } from "./utils.js"
+import { getProductosData, mostrarFichaProducto, crearTarjetaProducto } from "./utils.js"
 //=================================================================================
-const juegos = await getJuegosData()
-const juegosPorPagina = 6
+const productos = await getProductosData()
+const productosPorPagina = 12
 let paginaActual = 1
+let filtroPrecio = "none"
+let filtroAlfabetico = "none"
+
+const listaProductosOriginal = Object.values(productos)
+const campoBusqueda = document.getElementById("campo_busqueda")
 //=================================================================================
-
-//Buscador de juegos.
-var buscador = document.getElementById("buscadorDeJuegos")
-var contenedorJuegos = document.getElementById("resultadosBusqueda")
-buscador.addEventListener("input", function() {
-	const listaJuegos = Object.values(juegos)
-	var búsqueda = this.value.toLowerCase()
-	if (búsqueda.length > 0) {
-		var juegosFiltrados = listaJuegos.filter(function (juego) {
-			return juego.nombre.toLowerCase().includes(búsqueda)
-		})
-	
-		contenedorJuegos.innerHTML = ""
-	
-		juegosFiltrados.forEach(function (juego, i) {
-			let precioOfertaHTML = ""
-			let precioAnteriorHTML = "<span id='juego-precio-anterior'>   </span>"
-			let porcentajeDescuentoHTML = ""
-
-			if (juego.en_descuento) {
-				/* let porcentaje = ((juego.precio - juego.oferta) / juego.precio) * 100 */
-				porcentajeDescuentoHTML = `<span id="juego-descuento">(-${juego.porc_descuento}%)</span>`
-				precioOfertaHTML = `<span id="juego-precio-anterior">$${juego.precio}</span>`
-				precioAnteriorHTML = `<span id="juego-oferta">$${Math.trunc(juego.precio * (1 - (juego.porc_descuento / 100)))}</span>` 
-			}
-			let tarjetaJuego = `
-			<div class="card mb-3 h-100" style="max-width: 100%;">
-				<div class="row g-0">
-					<div class="col-md-4">
-						<img src="${'/static/core/img/juegos/' + juego.img + '.jpg'}" class="img-fluid rounded-start">
-					</div>
-					<div class="col-md-8 d-flex flex-column">
-						<div class="card-body">
-							<h5 class="card-title">${juego.nombre}</h5>
-							<p class="card-text"><small class="text-body-secondary" id="datosJuego${i}"><b>Precio:</b> <span id="juego-precio-actual">$${juego.precio}</span> • <b>Oferta:</b> ${precioAnteriorHTML} ${precioOfertaHTML} ${porcentajeDescuentoHTML} • <b>Stock:</b> <span id="juego-stock-actual">${juego.stock}</span></small></p>
-							<p class="card-text">${juego.descripcion}</p>
-						</div>
-						<div class="card-footer text-center mt-auto">
-							<button class="btn btn-success mx-2" type="submit" id="searchVerFicha${i}"><i class="bi bi-file-earmark-text"></i> Ver ficha</button>
-							<button class="btn btn-warning mx-2" type="submit" id="searchFavorito${i}"><i class="bi bi-bookmark-star"></i> Favoritos</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			`
-			
-			//contenedorJuegos.innerHTML += tarjetaJuego
-
-			let tempContainer = document.createElement("div")
-			tempContainer.innerHTML = tarjetaJuego
-			contenedorJuegos.appendChild(tempContainer.children[0])
-
-			let btnVerFicha = document.getElementById(`searchVerFicha${i}`)
-			let btnFavorito = document.getElementById(`searchFavorito${i}`)
-
-			btnVerFicha.addEventListener("click", function() {
-				mostrarFichaProducto(juegosFiltrados, i)
-			})
-		
-			btnFavorito.addEventListener("click", function() {
-				sendToast("Añadido a favoritos", "¡Añadiste " + juego.nombre + " a tus favoritos!", "warning-subtle")
-			})
-
-		})
-	} else {
-		contenedorJuegos.innerHTML = ""
-	}
+campoBusqueda.addEventListener("input", () => {
+	mostrarProductos(paginaActual, filtroPrecio, filtroAlfabetico)
 })
+//=================================================================================
 
 //Añadir las cartas de los juegos a la página.
-window.mostrarJuegos = function(pagina) {
-	const listaJuegos = Object.values(juegos);
-	const inicio = (pagina - 1) * juegosPorPagina;
-	const final = inicio + juegosPorPagina;
-	const juegosEnPagina = listaJuegos.slice(inicio, final);
-	
-	if (pagina < 1 || pagina > Math.ceil(listaJuegos.length / juegosPorPagina)) {
-		throw new Error(`Número de página inválido. Se esperaba un valor entre 1 y ${Math.ceil(listaJuegos.length / juegosPorPagina)}, se obtuvo: ${pagina}.`);
+async function mostrarProductos(pagina, ordenPrecios = "none", ordenAlfabetico = "none") {
+	let listaProductosFiltrados = [...listaProductosOriginal]
+	filtroPrecio = ordenPrecios
+	filtroAlfabetico = ordenAlfabetico
+
+	const busqueda = campoBusqueda.value.trim().toLowerCase()
+	if (busqueda !== "") {
+		listaProductosFiltrados = listaProductosFiltrados.filter(producto => {
+			return producto.nombre.toLowerCase().includes(busqueda)
+		})
 	}
 
-	const contenedorJuegos = document.getElementById("row-contenedor-juegos");
-	contenedorJuegos.innerHTML = "";
+	if (ordenPrecios == "desc") {
+		listaProductosFiltrados.sort((a, b) => b.precio - a.precio)
+	} else if (ordenPrecios == "asc") {
+		listaProductosFiltrados.sort((a, b) => a.precio - b.precio)
+	}
 
-	juegosEnPagina.forEach((juego, i) => {
-		let precioOfertaHTML = "";
-		let precioAnteriorHTML = "<span id='juego-precio-anterior'>   </span>";
-		let porcentajeDescuentoHTML = "";
-		let badge;
+	if (ordenAlfabetico == "desc") {
+		listaProductosFiltrados.sort((a, b) => a.nombre.localeCompare(b.nombre))
+	} else if (ordenAlfabetico == "asc") {
+		listaProductosFiltrados.sort((a, b) => b.nombre.localeCompare(a.nombre))
+	}
 
-		if (juego.stock > 0) {
-			badge = `<span class="badge text-bg-success">Disponible</span>`;
-			if (juego.en_descuento) {
-				badge += ` <span class="badge text-bg-info">Oferta</span>`;
-			}
-		} else if (juego.stock === 0 & juego.en_restock) {
-			badge = `<span class="badge text-bg-warning">Re-Stock en curso</span>`;
-		} else {
-			badge = `<span class="badge text-bg-danger">Agotado</span>`;
-		}
+	const inicio = (pagina - 1) * productosPorPagina
+	const final = inicio + productosPorPagina
+	const productosEnPagina = listaProductosFiltrados.slice(inicio, final)
 
-		if (juego.en_descuento) {
-			/* var porcentaje = ((juego.precio - juego.oferta) / juego.precio) * 100; */
-			porcentajeDescuentoHTML = `<span id="juego-descuento">(-${juego.porc_descuento}%)</span>`;
-			precioOfertaHTML = `<span id="juego-precio-anterior">$${juego.precio}</span>`;
-			precioAnteriorHTML = `<span id="juego-oferta">$${Math.trunc(juego.precio * (1 - (juego.porc_descuento / 100)))}</span>`; 
-		}
+	if (pagina < 1 || pagina > Math.ceil(listaProductosFiltrados.length / productosPorPagina)) {
+		throw new Error(`Número de página inválida. Se esperaba un valor entre 1 y ${Math.ceil(listaProductosFiltrados.length / productosPorPagina)}, se obtuvo ${pagina}.`)
+	}
 
-		var tarjetaJuego = `
-			<div class="col m-4 col-sm-12 col-md-6 col-lg-4 col-xl-3">
-				<div class="card" id="carta-juego">
-					<img src="${'/static/core/img/juegos/' + juego.img + '.jpg'}">
-					<div class="card-body">
-						<h5 class="card-title text-center">${juego.nombre}</h5>
-						<h5>
-							<p class="card-text text-center">
-								${badge}
-							</p>
-						</h5>
-						<p>
-							<b>Precio:</b> <span id="juego-precio-actual">$${juego.precio}</span><br>
-							<b>Oferta:</b> ${precioAnteriorHTML} ${porcentajeDescuentoHTML}<br>
-							<b>Stock:</b> <span id="juego-stock-actual">${juego.stock}</span><br>
-							<hr>
-							${juego.descripcion}
-						</p>
-					</div>
-					<div class="card-footer text-center">
-						<button class="btn btn-success mx-2" type="button" id="verFicha${i}"><i class="bi bi-file-earmark-text"></i> Ver ficha</button>
-						<button class="btn btn-warning mx-2" type="button" id="favorito${i}"><i class="bi bi-bookmark-star"></i> Favoritos</button>
-					</div>
-				</div>
-			</div>
-			`;
+	const contenedorProductos = document.getElementById("row-contenedor-productos")
+	contenedorProductos.innerHTML = ""
+	const favoritosElement = document.getElementById("favoritos-data")
+	let favoritos
+	try {
+		const favoritosString = localStorage.getItem("favoritos") || favoritosElement.textContent
+		favoritos = new Set(JSON.parse(favoritosString))
+	} catch (error) {
+		favoritos = new Set()
+	}
 
-		var tempContainer = document.createElement("div");
-		tempContainer.innerHTML = tarjetaJuego;
-		contenedorJuegos.appendChild(tempContainer.children[0]);
+	for (const [i, producto] of productosEnPagina.entries()) {
+		const tempContainer = document.createElement("div")
+		tempContainer.innerHTML = await crearTarjetaProducto(producto, i)
+		contenedorProductos.appendChild(tempContainer.children[0])
+
+		let btnVerFicha = document.getElementById(`verFicha${i}`)
+		let btnFavorito = document.getElementById(`favorito${i}`)
 	
-		var btnVerFicha = document.getElementById(`verFicha${i}`);
-		var btnFavorito = document.getElementById(`favorito${i}`);
+		if (favoritos.has(producto.id)) {
+			btnFavorito.querySelector("i").classList.remove("bi-heart")
+			btnFavorito.querySelector("i").classList.add("bi-heart-fill")
+		}
 
 		btnVerFicha.addEventListener("click", function() {
-			mostrarFichaProducto(juegosEnPagina, i)
+			mostrarFichaProducto(productosEnPagina, i)
 		})
-	
-		btnFavorito.addEventListener("click", function() {
-			sendToast("Añadido a favoritos", `¡Añadiste ${juego.nombre} a tus favoritos!`, "warning-subtle");
-		});
 
-	});
+		btnFavorito.addEventListener("click", function() {
+			const productoID = parseInt(btnFavorito.getAttribute("data-id"))
+			if (favoritos.has(productoID)) {
+				favoritos.delete(productoID)
+				this.querySelector("i").classList.add("bi-heart")
+				this.querySelector("i").classList.remove("bi-heart-fill")
+			} else {
+				favoritos.add(productoID)
+				this.querySelector("i").classList.add("bi-heart-fill")
+				this.querySelector("i").classList.remove("bi-heart")
+			}
+			localStorage.setItem("favoritos", JSON.stringify(Array.from(favoritos)))
+		})
+	}
 }
 
 //Paginación
 function inicializarPaginación() {
-	const cantidadJuegos = Object.values(juegos).length
-	const paginaMax = Math.ceil(cantidadJuegos / juegosPorPagina)
-	let paginacion = document.getElementById("paginacion")
+	const cantidadPaginas = Object.values(productos).length;
+	const paginaMax = Math.ceil(cantidadPaginas / productosPorPagina);
+	let paginacion = document.getElementById("paginacion");
 
 	function generarPaginacion() {
-		paginacion.innerHTML = ""
-		
-		let btnAnterior = document.createElement("li")
-		btnAnterior.className = "page-item"
-		btnAnterior.innerHTML = '<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>'
+		paginacion.innerHTML = "";
+
+		let btnAnterior = document.createElement("li");
+		btnAnterior.className = "page-item";
+		btnAnterior.innerHTML = '<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>';
 		btnAnterior.addEventListener("click", function() {
 			if (paginaActual > 1) {
-				paginaActual--
-				mostrarJuegos(paginaActual)
-				actualizarComponente(paginaActual)
+				paginaActual--;
+				mostrarProductos(paginaActual, filtroPrecio, filtroAlfabetico);
+				actualizarComponente(paginaActual);
 			}
-		})
-		paginacion.appendChild(btnAnterior)
+		});
+		paginacion.appendChild(btnAnterior);
 
-		for(let i = 1; i <= paginaMax; i++) {
-			let btnPagina = document.createElement("li")
-			btnPagina.className = "page-item"
-			btnPagina.innerHTML = `<a class="page-link" href="#" onclick="mostrarJuegos(${i})">` + i + '</a>'
-			btnPagina.addEventListener("click", function() {
-				let btnActivo = document.querySelector(".pagination .page-item.active")
-				let numeroPagina = btnActivo.querySelector(".page-link").innerText
-				paginaActual = parseInt(this.textContent)
-				//mostrarJuegos(paginaActual)
-				if (parseInt(numeroPagina) != paginaActual) {
-					btnPagina.classList.add("active")
-					btnActivo.classList.remove("active")
-				} 
-			})
-			paginacion.appendChild(btnPagina)
-			actualizarComponente(paginaActual)
+		for (let i = 1; i <= paginaMax; i++) {
+			let btnPagina = document.createElement("li");
+			btnPagina.className = "page-item";
+			btnPagina.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+			btnPagina.addEventListener("click", function(event) {
+				event.preventDefault();
+				let btnActivo = document.querySelector(".pagination .page-item.active");
+				let numeroPagina = btnActivo ? btnActivo.querySelector(".page-link").innerText : null;
+				paginaActual = parseInt(this.textContent);
+				if (numeroPagina !== this.textContent) {
+					btnPagina.classList.add("active");
+					if (btnActivo) btnActivo.classList.remove("active");
+					mostrarProductos(paginaActual, filtroPrecio, filtroAlfabetico);
+				}
+			});
+			paginacion.appendChild(btnPagina);
 		}
 
-		let btnSiguiente = document.createElement("li")
-		btnSiguiente.className = "page-item"
-		btnSiguiente.innerHTML = '<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>'
+		let btnSiguiente = document.createElement("li");
+		btnSiguiente.className = "page-item";
+		btnSiguiente.innerHTML = '<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>';
 		btnSiguiente.addEventListener("click", function() {
 			if (paginaActual < paginaMax) {
-				paginaActual++
-				mostrarJuegos(paginaActual)
-				actualizarComponente(paginaActual)
+				paginaActual++;
+				mostrarProductos(paginaActual, filtroPrecio, filtroAlfabetico);
+				actualizarComponente(paginaActual);
 			}
-		})
-		paginacion.appendChild(btnSiguiente)
+		});
+		paginacion.appendChild(btnSiguiente);
 	}
 
 	function actualizarComponente(pagina) {
@@ -218,109 +153,14 @@ function inicializarPaginación() {
 				button.classList.remove("active");
 			}
 		});
-		mostrarJuegos(paginaActual)
 	}
 
-	generarPaginacion()
+	generarPaginacion();
+	mostrarProductos(1);
+	actualizarComponente(1);
 }
 
-//Mostrar ficha producto
-function mostrarFichaProducto(juegosEnPagina, i) {
-	var modalHTML = document.getElementById("modalFichaProducto")
-	if (!modalHTML.classList.contains("show")) {
-		var modalInstance = new bootstrap.Modal(modalHTML)
-		var juego = juegosEnPagina[i] 
-		let precioOfertaHTML = ""
-		let precioAnteriorHTML = "<span id='juego-precio-anterior'>   </span>"
-		let porcentajeDescuentoHTML = ""
-		let badge;
-
-		if (juego.stock > 0) {
-			badge = `<span class="badge text-bg-success">Disponible</span>`;
-			if (juego.en_descuento) {
-				badge += ` <span class="badge text-bg-info">Oferta</span>`;
-			}
-		} else if (juego.stock === 0 & juego.en_restock) {
-			badge = `<span class="badge text-bg-warning">Re-Stock en curso</span>`;
-		} else {
-			badge = `<span class="badge text-bg-danger">Agotado</span>`;
-		}
-
-		if (juego.en_descuento) {
-			let porcentaje = ((juego.precio - juego.oferta) / juego.precio) * 100
-			porcentajeDescuentoHTML = `<span id="juego-descuento">(-${juego.porc_descuento}%)</span>`
-			precioOfertaHTML = `<span id="juego-precio-anterior">$${juego.precio}</span>`
-			precioAnteriorHTML = `<span id="juego-oferta">$${Math.trunc(juego.precio * (1 - (juego.porc_descuento / 100)))}</span>` 
-		}
-		let tarjetaJuego = `
-		<div class="card mb-3 h-100" style="max-width: 100%;">
-			<div class="row g-0">
-				<div class="col-md-4">
-					<img src="${'/static/core/img/juegos/' + juego.img + '.jpg'}" class="img-fluid rounded-start">
-				</div>
-				<div class="col-md-8 d-flex flex-column">
-					<div class="card-body">
-						<h5 class="card-title">${juego.nombre}</h5>
-						<p>${badge}</p>
-						<p class="card-text">${juego.descripcion}</p>
-					</div>
-					<div class="card-footer text-center mt-auto">
-						<b>Precio:</b> <span id="juego-precio-actual">$${juego.precio}</span> • <b>Oferta:</b> ${precioAnteriorHTML} ${porcentajeDescuentoHTML} • <b>Stock:</b> <span id="juego-stock-actual">${juego.stock}</span>
-					</div>
-				</div>
-			</div>
-		</div>
-		`
-		var modalHeader = document.getElementById("modalFichaProductoHeader")
-		var modalBody = document.getElementById("modalFichaProductoBody")
-		var modalFooter = document.getElementById("modalFichaProductoFooter")
-		modalHeader.innerHTML = `
-		<button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-		`
-		modalBody.innerHTML = tarjetaJuego
-		modalFooter.innerHTML = `
-		<button class="btn btn-success mx-2 ${juego.stock === 0 ? 'disabled' : ''}" type="submit" id="searchToastBuy${i}"><i class="bi bi-cart"></i> Añadir al carrito</button>
-		<button class="btn btn-success mx-2 ${juego.stock === 0 ? 'disabled' : ''}" type="submit" id="searchToastBuyNow${i}"><i class="bi bi-cash-stack"></i> Comprar ahora</button>
-		<button class="btn btn-warning mx-2" type="submit" id="searchToastFav${i}"><i class="bi bi-bookmark-star"></i> Favoritos</button>
-		`
-
-		var btnAñadirCarrito = document.getElementById(`searchToastBuy${i}`)
-		var btnComprarAhora = document.getElementById(`searchToastBuyNow${i}`)
-		var btnAñadirFavorito = document.getElementById(`searchToastFav${i}`)
-
-		btnAñadirCarrito.addEventListener("click", function() {
-			sendToast("Juego agregado al carrito de compras", `Agregaste ${juego.nombre}.`, "success-subtle");
-			agregarAlCarrito(juego);
-			//actualizarInformacionBoleta(juego);
-		})
-
-		btnComprarAhora.addEventListener("click", function() {
-			sendToast("Juego comprado", `Se compró ${juego.nombre}.`, "success-subtle")
-		})
-
-		btnAñadirFavorito.addEventListener("click", function() {
-			sendToast("Añadido a favoritos", `¡Añadiste ${juego.nombre} a tus favoritos!`, "warning-subtle");
-		})
-
-		modalInstance.show()
-	}
-}
-
-//Crear tarjeta de producto | Alineación 0: Vertical, Alineación 1: Horizontal
-function crearTarjetaProducto(juego, alineacion = 0) {}
-
-const categorias = ["Carreras", "Aventura", "Estrategia", "Cocina"] //Terminar esta parte, por favor, Seth del futuro.
-
-export function getCategoria(juego) {
-	var x = juego.categoria
-	if (categorias[x]) {
-		return categorias[x]
-	}
-	return "N/A"
-}
-
-mostrarJuegos(paginaActual)
 inicializarPaginación()
 
 //Listener para el botón del carrito
-window.addEventListener("storage", actualizarBotonCarrito())
+//window.addEventListener("storage", actualizarBotonCarrito())

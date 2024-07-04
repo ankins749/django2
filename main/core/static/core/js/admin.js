@@ -130,8 +130,8 @@ function cargarProducto(row) {
     var descuentoOferta = rowData[6].innerText;
     document.getElementById('campo_id').value = id;
     document.getElementById('campo_categoria').value = categoria;
-    document.getElementById('campo_nombre_producto').value = nombre;
-    document.getElementById('campo_descripcion_producto').value = descripcion;
+    document.getElementById('campo_nombre').value = nombre;
+    document.getElementById('campo_descripcion').value = descripcion;
     document.getElementById('campo_precio').value = precio;
     document.getElementById('campo_descuento_sub').value = descuentoSubscriptor;
     document.getElementById('campo_descuento_oferta').value = descuentoOferta;
@@ -171,9 +171,9 @@ function setActive() {
     document.getElementById("campo_id").value = id;
     document.getElementById("campo_categoria").value = categoria.toLowerCase();
     document.getElementById("campo_rut").value = rut;
-    document.getElementById("campo_nombre_usuario").value = nombre;
-    document.getElementById("campo_apellido_usuario").value = apellido;
-    document.getElementById("campo_email").value = correo;
+    document.getElementById("campo_nombre").value = nombre;
+    document.getElementById("campo_apellido").value = apellido;
+    document.getElementById("campo_correo").value = correo;
     document.getElementById("campo_direccion").value = direccion;
     document.getElementById("campo_suscripcion").value = suscripcionFormulario;
 }

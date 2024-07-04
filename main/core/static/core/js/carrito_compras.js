@@ -31,14 +31,17 @@ document.addEventListener("DOMContentLoaded", function() {
 		let filaTabla = document.createElement("tr")
 		let columnaImagen = document.createElement("td")
 		let imagen = document.createElement("img")
-		let descuentoSub = 0
-		let descuentoOferta = juego.en_descuento ? juego.porc_descuento : 0
+		let descuentoSub = juego.descuento_subs
+		let descuentoOferta = juego.en_descuento ? juego.descuento : 0
 		let descuentoTotal = descuentoOferta + descuentoSub
 
-		imagen.src = "/static/core/img/juegos/" + juego.img + ".jpg"
+		imagen.src = "/media/" + juego.imagen
+		// imagen.src=imagen.src.replace("/carrito_compras/","")
+		console.log("veeme aqui abajo")
+		console.log(imagen.src)
 		imagen.width = 35
 		imagen.height = 35
-
+		
 		columnaImagen.style.textAlign = "center"
 		columnaImagen.appendChild(imagen)
 		filaTabla.appendChild(columnaImagen)
@@ -48,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		filaTabla.appendChild(columnaNombre)
 
 		let columnaCategoria = document.createElement("td")
-		columnaCategoria.textContent = "N/A"
+		columnaCategoria.textContent = juego.categoria
 		filaTabla.appendChild(columnaCategoria)
 
 		let columnaPrecio = document.createElement("td")
@@ -56,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		filaTabla.appendChild(columnaPrecio)
 
 		let columnaDescuentoSub = document.createElement("td")
-		columnaDescuentoSub.textContent = "N/A"
+		columnaDescuentoSub.textContent = "-" + juego.descuento_subs + "%"
 		filaTabla.appendChild(columnaDescuentoSub)
 
 		let columnaOferta = document.createElement("td")
